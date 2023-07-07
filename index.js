@@ -306,15 +306,33 @@ class Modal {
     this.paymentMethod = paymentMethod;
     this.productQuantity = productQuantity;
     this.comment = comment;
-    this.identifyElements();
     this.checkInputs();
   }
   checkInputs() {
     if (this.fullName && this.city && this.postOfficeNumber.toString() && this.paymentMethod && this.productQuantity) {
-      this.renderModalGood();
+      new modalGood(this.fullName, this.city, this.postOfficeNumber, this.paymentMethod, this.productQuantity, this.comment);
     } else {
-      this.renderModalBad();
+      new modalBad();
     }
+  }
+}
+
+class modalGood {
+  constructor(fullName, city, postOfficeNumber, paymentMethod, productQuantity, comment) {
+    this.fullName = fullName;
+    this.city = city;
+    this.postOfficeNumber = postOfficeNumber;
+    this.paymentMethod = paymentMethod;
+    this.productQuantity = productQuantity;
+    this.comment = comment;
+    this.identifyElements();
+    this.renderModalGood();
+  }
+  identifyElements() {
+    this.products = document.querySelector('.products');
+    this.about = document.querySelector('.about');
+    this.modalWrapp = document.querySelector('#modal-wrapp');
+    this.modal = document.querySelector('.modal');
   }
   renderModalGood() {
     this.modal.innerText = '';
@@ -353,6 +371,21 @@ class Modal {
   }
   attachEventHandlersGood() {
     this.modalWrapp.onclick = () => this.backToItsoriginalState();
+  }
+  backToItsoriginalState() {
+    this.about.innerText = '';
+    this.products.innerText = '';
+    this.toggleModalWindow();
+  }
+  toggleModalWindow() {
+    this.modalWrapp.classList.toggle('d-none');
+  }
+}
+
+class modalBad {
+  constructor() {
+    this.identifyElements();
+    this.renderModalBad();
   }
   renderModalBad() {
     this.modal.innerText = '';
